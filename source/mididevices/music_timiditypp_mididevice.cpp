@@ -41,7 +41,7 @@
 #include "timiditypp/timidity.h"
 #include "timiditypp/instrum.h"
 #include "timiditypp/playmidi.h"
-
+#include "timiditypp/common.h"
 
 TimidityConfig timidityConfig;
 
@@ -209,8 +209,7 @@ bool Timidity_SetupConfig(const char* args)
 		if (f)
 		{
 			char test[12] = {};
-			if (!fread(test, 1, 12, f))
-				;
+			TimidityPlus::fread_fully_noerror(test, 1, 12, f);
 			fclose(f);
 			// If the passed file is an SF2 sound font we need to use the special reader that fakes a config for it.
 			if (memcmp(test, "RIFF", 4) == 0 && memcmp(test + 8, "sfbk", 4) == 0)

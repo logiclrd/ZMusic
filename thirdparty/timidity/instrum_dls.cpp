@@ -144,10 +144,8 @@ RIFF_Chunk *LoadRIFF(FILE *src)
 	chunk = new RIFF_Chunk;
 
 	/* Make sure the file is in RIFF format */
-	if (!fread(&chunk->magic, 4, 1, src))
-		;
-	if (!fread(&chunk->length, 4, 1, src))
-		;
+	fread_fully_noerror(&chunk->magic, 4, 1, src);
+	fread_fully_noerror(&chunk->length, 4, 1, src);
 	chunk->length = LittleLong(chunk->length);
 	if ( chunk->magic != RIFF ) {
 		__Sound_SetError("Not a RIFF file");

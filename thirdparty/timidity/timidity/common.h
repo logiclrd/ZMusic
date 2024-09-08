@@ -138,6 +138,10 @@ common.h
 
 extern void *safe_malloc(size_t count);
 
+void fread_fully_noerror(void *ptr/*[restrict .size * .nmemb]*/,
+                         size_t size, size_t nmemb,
+                         FILE *stream);
+
 #ifndef MAKE_ID
 #ifndef __BIG_ENDIAN__
 #define MAKE_ID(a,b,c,d)	((uint32_t)((a)|((b)<<8)|((c)<<16)|((d)<<24)))

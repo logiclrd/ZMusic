@@ -69,5 +69,8 @@ extern void free_ptr_list(void *ptr_list, int count);
 extern int string_to_7bit_range(const char *s, int *start, int *end);
 extern int  load_table(char *file);
 
+void fread_fully_noerror(void *ptr/*[restrict .size * .nmemb]*/,
+                         size_t size, size_t nmemb,
+                         FILE *stream);
 }
 #endif /* ___COMMON_H_ */

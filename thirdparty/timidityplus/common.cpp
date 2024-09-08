@@ -168,4 +168,25 @@ void default_ctl_cmsg(int type, int verbosity_level, const char* fmt, ...)
 // Allow hosting applications to capture the messages and deal with them themselves.
 void (*printMessage)(int type, int verbosity_level, const char* fmt, ...) = default_ctl_cmsg;
 
+/* This will call fread repeatedly as needed until all the requested bytes are read. */
+void fread_fully_noerror(void *ptr/*[restrict .size * .nmemb]*/,
+                         size_t size, size_t nmemb,
+                         FILE *stream)
+{
+	size_t offset = 0;
+	size_t remaining = size * nmemb;
+	char *ptr_byte = (char *)ptr;
+
+	while (remaining > 0)
+	{
+		size_t num_read = fread(ptr_byte + offset, 1, remaining, stream);
+
+		if (num_read == 0)
+			break;
+
+		offset += num_read;
+		remaining -= num_read;
+	}
+}
+
 }
